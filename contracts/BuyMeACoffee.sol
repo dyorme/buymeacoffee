@@ -25,7 +25,7 @@ contract BuyMeACoffee {
     // Address of contract deployer
     address payable owner;
 
-    // Deploy logic
+    // Deploy logic d
     constructor(){
         owner = payable(msg.sender);
 
