@@ -59,16 +59,29 @@ async function main() {
   await printBalances(addresses);
 
   // buy the owner a few coffees
+  const tip = {value: hre.ethers.utils.parseEther("1")};
+  await buyMeACoffee.connect(tipper).buyCoffee("Truda","da best", tip);
+  await buyMeACoffee.connect(tipper2).buyCoffee("0xUnagi","amaziiing", tip);
+  await buyMeACoffee.connect(tipper3).buyCoffee("Mochi","I love my PoK NFT!", tip);
+
   
-  //const tip ={value: hre.ethers.utils.parseEther("1")};
-
   //check balances after coffee purchase
-
+  console.log("== bought coffee ==");
+  await printBalances(addresses);
   //withdraw money
+  await buyMeACoffee.connect(owner).withdrawTips();
+
+
 
   // check balance after withdraw
-
+  console.log("== withdraw tips ==");
+  await printBalances(addresses);
   //read all memos left for the owner
+  console.log("== memos ==");
+  const memos = await buyMeACoffee.getMemos();
+  printMemos(memos);
+
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
