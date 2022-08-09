@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-    // Deployed to Goerli at 0xc91eECF76D9D3945AE163802B7a2Fb1adF7da57B
+    // Deployed to Goerli at 0xe64Ae59a3c567860525f28b037B28e084C66d068
 
 contract BuyMeACoffee {
     // Event to emit when a Memo is created
@@ -48,6 +48,18 @@ contract BuyMeACoffee {
             _name,
             _message
         ));
+    }
+
+      function buyLargeCoffee(string memory _name, string memory _message) public payable {
+        require(msg.value > 0, "can't buy a shid with 0 eth");
+
+        // Add the memo to storage
+        memos.push(Memo(
+            msg.sender,
+            block.timestamp,
+            _name,
+            _message
+        ));   
 
         // Emit a log event when a new memo is created
         emit NewMemo(
@@ -60,6 +72,7 @@ contract BuyMeACoffee {
 
     }
 
+
     /**
      * @dev send the entire balance stored in this contract to the owner
      */
@@ -67,6 +80,11 @@ contract BuyMeACoffee {
         require(owner.send(address(this).balance));
 
         
+    }
+    //change address for withdrawal
+    function transferOwnership(address payable _newOwner) public{
+      require(msg.sender == owner, "Only the owner can transfer the tips");
+      require(_newOwner.send(address(this).balance));
     }
     /**
      * @dev retrieve all the memos received and stored on the blockchain

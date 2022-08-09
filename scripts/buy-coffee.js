@@ -62,14 +62,19 @@ async function main() {
   const tip = {value: hre.ethers.utils.parseEther("1")};
   await buyMeACoffee.connect(tipper).buyCoffee("Truda","da best", tip);
   await buyMeACoffee.connect(tipper2).buyCoffee("","amaziiing", tip);
-  await buyMeACoffee.connect(tipper3).buyCoffee("Mochi","I love my PoK NFT!", tip);
+  await buyMeACoffee.connect(tipper3).buyLargeCoffee("Mochi","I love my PoK NFT!", tip);
 
   
   //check balances after coffee purchase
   console.log("== bought coffee ==");
   await printBalances(addresses);
+  
+  //change withdrawal address
+  await buyMeACoffee.connect(owner).transferOwnership();
+  
   //withdraw money
   await buyMeACoffee.connect(owner).withdrawTips();
+
 
 
 
